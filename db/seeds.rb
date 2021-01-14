@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Product.destroy_all()
 User.destroy_all()
+Review.destroy_all()
 
 10.times do
   User.create(
@@ -16,16 +17,21 @@ User.destroy_all()
   )
 end
 
-10.times do
+50.times do
   price = rand(100)
-  Product.create(
+  p = Product.create(
     title: Faker::Games::Fallout.character,
     description: Faker::Games::Fallout.quote,
     price: price,
   )
+  if p.valid?
+    p.reviews = rand(1..10).times.map do
+      Review.new(body: Faker::TvShows::HowIMetYourMother.quote, rating: rand(1..5))
+    end
+  end
 end
 user = User.all
 product = Product.all
+review = Review.all
 
-puts "Generated #{product.count} products."
-puts "Generated #{user.count} users."
+puts "Generated #{product.count} products, #{user.count} users, #{review.count} reviews."

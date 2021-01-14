@@ -1,0 +1,19 @@
+<%= form_with model: @product, local: true do |form| %>
+<% if @product.errors.present? %>
+<%= @product.errors.full_messages.join(", ") %>
+<% end %>
+<div>
+    <%= form.label :title %> 
+    <%= form.text_field :title %> 
+</div>
+<div>
+    <%= form.label :description %>
+    <%= form.text_area :description, cols: 50, rows: 5 %>  
+</div>
+<div>
+    <%= form.label :price %> 
+    <%= form.text_field :price %> 
+</div>
+<%= form.submit class: "btn btn-primary" %> 
+
+<% end %>
