@@ -8,30 +8,43 @@
 Product.destroy_all()
 User.destroy_all()
 Review.destroy_all()
-
+PASSWORD = "123"
+super_user = User.create(
+  first_name: "Jon",
+  last_name: "Snow",
+  email: "js@winterfell.gov",
+  password: PASSWORD,
+)
 10.times do
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
   User.create(
-    first_name: Faker::Movies::Departed.actor,
-    last_name: Faker::Movies::Departed.character,
-    email: Faker::Movies::Departed.quote,
+    first_name: first_name,
+    last_name: last_name,
+    email: "#{first_name}.#{last_name}@gmail.com",
+    password: PASSWORD,
   )
 end
-
+users = User.all
 50.times do
   price = rand(100)
   p = Product.create(
-    title: Faker::Games::Fallout.character,
-    description: Faker::Games::Fallout.quote,
+    title: Faker::Commerce.product_name,
+    description: Faker::Hipster.sentence,
     price: price,
+    user: users.sample,
   )
   if p.valid?
     p.reviews = rand(1..10).times.map do
-      Review.new(body: Faker::TvShows::HowIMetYourMother.quote, rating: rand(1..5))
+      Review.new(
+        body: Faker::Hipster.paragraph,
+        rating: rand(1..5),
+        user: users.sample,
+      )
     end
   end
 end
-user = User.all
 product = Product.all
 review = Review.all
 
-puts "Generated #{product.count} products, #{user.count} users, #{review.count} reviews."
+puts "Generated #{product.count} products, #{users.count} users, #{review.count} reviews."

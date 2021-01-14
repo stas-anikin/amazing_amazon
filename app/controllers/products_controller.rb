@@ -17,9 +17,11 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new product_params
-    @answer.user = current_user
+    @product.user = current_user
 
     if @product.save
+      flash[:notice] = "Product created successfully."
+
       redirect_to product_path(@product.id)
     else
       render :new

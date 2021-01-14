@@ -1,5 +1,8 @@
 <h3><%= @product.title %></h3>
 <p><%= @product.description %></p>
+<div>
+<%=@product.user&.full_name||"Deleted" %>'s product
+</div>
 <p>Price: <%= number_to_currency @product.price %></p>
 
 <small>
@@ -31,7 +34,10 @@
     <div class='shadow-sm p-3 mb-1 bg-white rounded'>
 
 <%= review.body %>
-
+<div>
+Review by: 
+<%=review.user&.full_name||"Deleted" %>
+</div>
     <h4><%= display_stars(review) %></h4>
 <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
 </div>
