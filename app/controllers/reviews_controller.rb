@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def create
     @product = Product.find params[:product_id]
@@ -26,5 +27,9 @@ class ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:body, :rating)
+  end
+
+  def authorize_user!
+    redirect_to root_path, alert: "not authorized" unless can?(:crud, @review)
   end
 end

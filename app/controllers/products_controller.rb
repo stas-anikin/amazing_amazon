@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
   before_action :find_product, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @products = Product.all.order(created_at: :desc)
@@ -29,6 +31,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path, alert: "access denied" unless can? :edit, @product
   end
 
   def update
@@ -40,6 +43,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    redirect_to root_path, alert: "access defined" unless can? :destroy, @product
+
     @product.destroy
     redirect_to products_path
   end
@@ -52,5 +57,9 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :description, :price)
+  end
+
+  def authorize_user!
+    redirect_to root_path, alert: "not authorized" unless can?(:crud, @product)
   end
 end

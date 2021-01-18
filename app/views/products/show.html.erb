@@ -6,8 +6,15 @@
 <p>Price: <%= number_to_currency @product.price %></p>
 
 <small>
+<%if can? :crud, @product%>
+
     <%= link_to("Edit", edit_product_path(@product.id)) %> | 
+    <%end%>
+<%if can? :crud, @product%>
+
     <%= link_to("Delete", product_path(@product), method: :delete, data: { confirm: "Are you sure ?" }) %>
+        <%end%>
+
 </small>
 <h3>Write your review</h3>
 <%= form_with model:[@product,@review],local: true do |f|%>
@@ -39,6 +46,8 @@ Review by:
 <%=review.user&.full_name||"Deleted" %>
 </div>
     <h4><%= display_stars(review) %></h4>
+    <%if can? :crud, review%>
 <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
+<%end%>
 </div>
 <% end %> 
