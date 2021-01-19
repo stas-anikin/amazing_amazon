@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   get("/home", to: "welcome#home")
   get("/about", to: "welcome#about")
   get("/", { to: "welcome#home", as: :root })
-
+  get("/admin/panel", to: "welcome#admin_panel")
   resources :products do
-    resources :reviews, only: [:create, :destroy]
+    resources :reviews
   end
   resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create]
