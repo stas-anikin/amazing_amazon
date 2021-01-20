@@ -1,4 +1,6 @@
 class NewsArticlesController < ApplicationController
+  before_action :find_news_article, only: [:show, :update, :destroy]
+
   def new
     @news_article = NewsArticle.new
   end
@@ -44,5 +46,17 @@ class NewsArticlesController < ApplicationController
                               )
       redirect_to @news_article
     end
+  end
+
+  def destroy
+    @news_article.destroy
+    flash[:danger] = "news article deleted successfully!"
+    redirect_to news_articles_path
+  end
+
+  private
+
+  def find_news_article
+    @news_article = NewsArticle.find params[:id]
   end
 end

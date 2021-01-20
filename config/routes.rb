@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews
   end
-  resources :news_articles, only: [:new, :create, :show, :index, :edit, :update]
+  resources :news_articles, only: [:new, :create, :show, :index, :edit, :update, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create]
 end
