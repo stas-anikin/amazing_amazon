@@ -26,6 +26,16 @@ super_user = User.create(
     password: PASSWORD,
   )
 end
+2.times do
+  title = Faker::Name.first_name
+  description = Faker::Name.last_name
+  NewsArticle.create(
+    title: title,
+    description: description,
+    published_at: Faker::Date.forward(days: 23),
+    created_at: Faker::Date.backward(days: 14),
+  )
+end
 users = User.all
 50.times do
   price = rand(100)
@@ -47,5 +57,5 @@ users = User.all
 end
 product = Product.all
 review = Review.all
-
-puts "Generated #{product.count} products, #{users.count} users, #{review.count} reviews."
+news_article = NewsArticle.all
+puts "Generated #{product.count} products, #{news_article.count} articles, #{users.count} users, #{review.count} reviews."
