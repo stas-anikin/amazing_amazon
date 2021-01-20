@@ -77,7 +77,7 @@ RSpec.describe NewsArticlesController, type: :controller do
       news_article_1 = FactoryBot.create(:news_article)
 
       get(:index)
-      expect(assigns(:news_articles)).to eq([news_article_3, news_article_2, news_article_1])
+      expect(assigns(:news_articles)).to eq([news_article_1, news_article_2, news_article_3])
     end
   end
   #DESCRIBING EDIT

@@ -27,7 +27,7 @@ class NewsArticlesController < ApplicationController
   end
 
   def index
-    @news_articles = NewsArticle.all.order(created_at: :desc)
+    @news_articles = NewsArticle.all.order(id: :desc)
   end
 
   def edit

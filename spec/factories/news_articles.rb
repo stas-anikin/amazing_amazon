@@ -9,6 +9,3 @@ FactoryBot.define do
     view_count { rand(1..1000) }
   end
 end
-
-# FactoryBot.create(:news_article) 👈🏻 This will create the object and save it in a db
-# FactoryBot.build(:news_article) 👈🏻 This will give us a object lik
