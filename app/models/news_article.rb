@@ -3,6 +3,7 @@ class NewsArticle < ApplicationRecord
   validates :description, presence: true
   validates :published_at, presence: true
   validate :published_at_before_created_at
+  belongs_to :user
 
   private
 

@@ -31,7 +31,9 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     alias_action(:create, :read, :update, :delete, to: :crud)
-
+    can(:crud, NewsArticle) do |news_article|
+      user == news_article.user
+    end
     can(:crud, Product) do |product|
       user == product.user
     end

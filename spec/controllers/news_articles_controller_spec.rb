@@ -2,16 +2,23 @@ require "rails_helper"
 #DESCRIBING NEW
 RSpec.describe NewsArticlesController, type: :controller do
   describe "#new" do
-    it "renders a template to create a new news_article" do
-      get(:new)
+    context "with signed in user" do
+      before do
+        session[:user_id] = FactoryBot.create(:user)
+      end
 
-      expect(response).to(render_template(:new))
-    end
-    it "creates an instance variable of a news_article with new.NewsArticle" do
-      get(:new)
-      expect(assigns(:news_article)).to(be_a_new(NewsArticle))
+      it "renders a template to create a new news_article" do
+        get(:new)
+
+        expect(response).to(render_template(:new))
+      end
+      it "creates an instance variable of a news_article with new.NewsArticle" do
+        get(:new)
+        expect(assigns(:news_article)).to(be_a_new(NewsArticle))
+      end
     end
   end
+
   #DESCRIBING CREATE
   describe "#create" do
     context "checking with valid parameters " do
@@ -19,37 +26,42 @@ RSpec.describe NewsArticlesController, type: :controller do
         post(:create, params: { news_article: FactoryBot.attributes_for(:news_article) })
       end
 
-      it "creates a news article in the database" do
-        count_before = NewsArticle.count
-        valid_request
-        count_after = NewsArticle.count
-        expect(count_after).to(eq(count_before + 1))
-      end
-      it "redirects us to a show page of the newly created news_article" do
-        valid_request
+      context "with user signed in" do
+        before do
+          session[:user_id] = FactoryBot.create(:user)
+        end
 
-        news_article = NewsArticle.last
-        expect(response).to(redirect_to(news_article_url(news_article.id)))
-      end
-    end
-    context "adding invalid parameters" do
-      def invalid_request
-        post(:create, params: { news_article: FactoryBot.attributes_for(:news_article, title: nil) })
-      end
+        it "creates a news article in the database" do
+          count_before = NewsArticle.count
+          valid_request
+          count_after = NewsArticle.count
+          expect(count_after).to(eq(count_before + 1))
+        end
+        it "redirects us to a show page of the newly created news_article" do
+          valid_request
 
-      it "checks if the news article saves to the database" do
-        count_before = NewsArticle.count
-        invalid_request
-        count_after = NewsArticle.count
-        expect(count_after).to(eq(count_before))
+          news_article = NewsArticle.last
+          expect(response).to(redirect_to(news_article_url(news_article.id)))
+        end
       end
-      it "renders a template for a new news_article" do
-        invalid_request
-        expect(response).to render_template(:new)
+      context "adding invalid parameters" do
+        def invalid_request
+          post(:create, params: { news_article: FactoryBot.attributes_for(:news_article, title: nil) })
+        end
+
+        it "checks if the news article saves to the database" do
+          count_before = NewsArticle.count
+          invalid_request
+          count_after = NewsArticle.count
+          expect(count_after).to(eq(count_before))
+        end
+        it "redirects user to sign in page" do
+          invalid_request
+          expect(response).to redirect_to(new_session_path)
+        end
       end
     end
   end
-
   #DESCRIBING SHOW
   describe "#show" do
     it "renders show template of a news_article" do
@@ -82,52 +94,94 @@ RSpec.describe NewsArticlesController, type: :controller do
   end
   #DESCRIBING EDIT
   describe "# edit" do
-    it "renders the edit template" do
-      news_article = FactoryBot.create(:news_article)
-      get(:edit, params: { id: news_article.id })
-      expect(response).to render_template :edit
+    context "with signed in user" do
+      context "as owner" do
+        before do
+          current_user = FactoryBot.create(:user)
+          session[:user_id] = current_user.id
+          @news_article = FactoryBot.create(:news_article, user: current_user)
+        end
+        it "renders the edit template" do
+          get(:edit, params: { id: @news_article.id })
+          expect(response).to render_template :edit
+        end
+      end
+      context "as non owner" do
+        before do
+          current_user = FactoryBot.create(:user)
+          session[:user_id] = current_user.id
+          @news_article = FactoryBot.create(:news_article)
+        end
+        it "should redirect to the show page" do
+          get(:edit, params: { id: @news_article.id })
+          expect(response).to redirect_to news_article_path(@news_article)
+        end
+      end
     end
   end
-  #DESCRIBING UPDATE
 
+  #DESCRIBING UPDATE
   describe "#update" do
     before do
       @news_article = FactoryBot.create(:news_article)
     end
-    context "with valid parameters" do
-      it "updates news article record with new attributes" do
-        new_title = "#{@news_article.title} has been updated"
-        patch(:update, params: { id: @news_article.id, news_article: { title: new_title } })
-        expect(@news_article.reload.title).to(eq(new_title))
+    context "with signed in user" do
+      before do
+        session[:user_id] = FactoryBot.create(:user)
       end
-      it "redirects to the show page" do
-        new_title = "#{@news_article.title} has been updated"
-        patch(:update, params: { id: @news_article.id, news_article: { title: new_title } })
-        expect(response).to redirect_to(@news_article)
+      context "with valid parameters" do
+        it "updates news article record with new attributes" do
+          new_title = "#{@news_article.title} has been updated"
+          patch(:update, params: { id: @news_article.id, news_article: { title: new_title } })
+          expect(@news_article.reload.title).to(eq(new_title))
+        end
+        it "redirects to the show page" do
+          new_title = "#{@news_article.title} has been updated"
+          patch(:update, params: { id: @news_article.id, news_article: { title: new_title } })
+          expect(response).to redirect_to(@news_article)
+        end
       end
-    end
-    context "with invalid parameters" do
-      it "should not update the news article record" do
-        patch(:update, params: { id: @news_article.id, news_article: { title: nil } })
-        news_article_after_update = NewsArticle.find(@news_article.id)
-        expect(news_article_after_update.title).to(eq(@news_article.title))
+      context "with invalid parameters" do
+        it "should not update the news article record" do
+          patch(:update, params: { id: @news_article.id, news_article: { title: nil } })
+          news_article_after_update = NewsArticle.find(@news_article.id)
+          expect(news_article_after_update.title).to(eq(@news_article.title))
+        end
       end
     end
   end
+
   #DESCRIBING DESTROY
   describe "#destroy" do
-    before do
-      @news_article = FactoryBot.create(:news_article)
-      delete(:destroy, params: { id: @news_article.id })
-    end
-    it "removes the news article from database" do
-      expect(NewsArticle.find_by(id: @news_article.id)).to(be(nil))
-    end
-    it "redirects to the news article index" do
-      expect(response).to redirect_to(news_articles_path)
-    end
-    it "sets a flash message" do
-      expect(flash[:danger]).to be
+    context "with signed in user" do
+      context "as owner" do
+        before do
+          current_user = FactoryBot.create(:user)
+          session[:user_id] = current_user.id
+          @news_article = FactoryBot.create(:news_article, user: current_user)
+          delete(:destroy, params: { id: @news_article.id })
+        end
+        it "removes the news article from database" do
+          expect(NewsArticle.find_by(id: @news_article.id)).to(be(nil))
+        end
+        it "redirects to the news article index" do
+          expect(response).to redirect_to(news_articles_path)
+        end
+        it "sets a flash message" do
+          expect(flash[:danger]).to be
+        end
+      end
+      context "as non owner" do
+        before do
+          current_user = FactoryBot.create(:user)
+          session[:user_id] = current_user.id
+          @news_article = FactoryBot.create(:news_article)
+        end
+        it "does not delete the news article" do
+          delete(:destroy, params: { id: @news_article.id })
+          expect(NewsArticle.find(@news_article.id)).to eq(@news_article)
+        end
+      end
     end
   end
 end

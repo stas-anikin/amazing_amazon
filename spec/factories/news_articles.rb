@@ -7,5 +7,6 @@ FactoryBot.define do
     published_at { Faker::Date.forward(days: 14) }
     created_at { Faker::Date.backward(days: 23) }
     view_count { rand(1..1000) }
+    association(:user, factory: :user)
   end
 end
