@@ -1,38 +1,43 @@
-<h3><%= @product.title %></h3>
-<p><%= @product.description %></p>
-<div>
-<%=@product.user&.full_name||"Deleted" %>'s product
-</div>
-<p>Price: <%= number_to_currency @product.price %></p>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-8 mt-4">
+            <div class="card text-center shadow mb-5 bg-white rounded">
+                <div class="card-header">
+                    A product by: <%= @product.user&.full_name || "Deleted" %>
+                </div> 
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= @product.title %>
+                        </h5>
+                    <p class="card-text">
+                        <%= @product.description %>
+                    </p>
+                    <p class="card-text">
+                        <%= number_to_currency(@product.price) %>
+                    </p>
 
-<small>
-<%if can? :crud, @product%>
+<% if can? :crud, @product %>
             <%= link_to "Edit", edit_product_path(@product), class: "btn btn-outline-info" %>
-    <%end%>
-<%if can? :crud, @product%>
-            <%= link_to "Delete", product_path(@product), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+    <% end %>
+<% if can? :crud, @product %>
+            <%= link_to "Delete", product_path(@product), class: "btn btn-outline-danger", method: :delete, data: { confirm: "Are you sure?" } %>
 
-        <%end%>
+        <% end %>
 
-</small>
-<h3>Write your review</h3>
-<%= form_with model:[@product,@review],local: true do |f|%>
-<ul>
-<% if @review.errors.full_messages.each do |msg|%>
-    <li>
-        <%= msg %>
-    </li>
-<% end %>
-<% end %>
-</ul>
+  <div class="card text-center shadow mt-4 mb-5 bg-white rounded">
+                <div class="card-header">
+                    Write your review
+                    </div>
+<%= form_with model: [@product, @review], class: "shadow p-3 mb-3 bg-info rounded", local: true do |f| %>
+              <%= render "shared/errors", obj: @review %>
 <div class='shadow-sm p-3 mb-5 bg-white round'>
   Your Review <%= f.text_area :body,
                               cols: 50,
                               rows: 5,
                               placeholder: "How do you find the product?" %></p>
-  <p>Your Rating <%= f.select(:rating, options_for_select(1..5), class: 'form-control') %>
+  <p>Your Rating <%= f.select(:rating, options_for_select(1..5), class: "form-control") %>
   </div>
-  <%= f.submit  class: 'btn btn-primary' %>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>
 
 <h3>Reviews</h3>
@@ -42,11 +47,11 @@
 <%= review.body %>
 <div>
 Review by: 
-<%=review.user&.full_name||"Deleted" %>
+<%= review.user&.full_name || "Deleted" %>
 </div>
     <h4><%= display_stars(review) %></h4>
-    <%if can? :crud, review%>
+    <% if can? :crud, review %>
 <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
-<%end%>
+<% end %>
 </div>
 <% end %> 

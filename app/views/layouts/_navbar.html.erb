@@ -1,41 +1,40 @@
 
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+     <nav class="navbar navbar-expand-lg mx-auto navbar-light  nav-fill w-100 bg-light">
 <li class="nav-item active">
-                <%= link_to "Home", root_path, class: "nav-link-active text-white" %>|
+                <%= link_to "Home", root_path, class: "nav-link-active text-white" %>
      </li>
   <li class="nav-item active">
-      <%= link_to "Products", products_path, class: "nav-link-active text-white" %>|
+      <%= link_to "Products", products_path, class: "nav-link-active text-white" %>
        </li>
   <li class="nav-item active">
-         <%= link_to "New Product", new_product_path, class: "nav-link-active text-white" %>|
+         <%= link_to "New Product", new_product_path, class: "nav-link-active text-white" %>
           </li>
   <li class="nav-item active">
-<%= link_to "About", about_path, class: "nav-link-active text-white" %>|
+<%= link_to "About", about_path, class: "nav-link-active text-white" %>
 </li><% if user_signed_in? %>
 
   <li class="nav-item active text-white">
-<span>Hello, <%= current_user.full_name %>|</span>
+<span>Hello, <%= current_user.full_name %></span>
+
 </li>
 
      <% if current_user.is_admin? %>
 <li class="nav-item">
-                <%= link_to "Admin Panel", admin_panel_path, class: "nav-link-active text-white" %>|
+                <%= link_to "Admin Panel", admin_panel_path, class: "nav-link-active text-white" %>
      </li>
-  <li class="nav-item active">
 <% end %>
 <li class="nav-item">
 <%= link_to "Logout", session_path, method: :delete,
-                                    data: { confirm: "Are you sure you want to log out?" }, class: "nav-link-active text-white" %>|
+                                    data: { confirm: "Are you sure you want to log out?" }, class: "nav-link-active text-white" %>
 </li> 
    <% else %>
  <li class="nav-item active">
-                   <%= link_to "Login", new_session_path, class: "nav-link-active text-white" %>|
+                   <%= link_to "Login", new_session_path, class: "nav-link-active text-white" %>
 </li> 
     
     
   <li class="nav-item active">
-<%= link_to "Sign Up", new_user_path, class: "nav-link-active text-white" %>|
+<%= link_to "Sign Up", new_user_path, class: "nav-link-active text-white" %>
 </li>
 
 

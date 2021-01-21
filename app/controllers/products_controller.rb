@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_path, alert: "access defined" unless can? :destroy, @product
+    redirect_to products_path
   end
 
   private

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   # scope(:created_after, ->(date) { where("created_at < ?", "#{date}") })
+  before_save { self.email = email.downcase }
   has_many :products, dependent: :nullify
   has_many :reviews, dependent: :nullify
   has_secure_password
