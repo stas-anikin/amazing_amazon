@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   end
   resources :news_articles, only: [:new, :create, :show, :index, :edit, :update, :destroy]
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create]
+  resources :users
 end
