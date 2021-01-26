@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def favoured
+    @user = current_user
+    @products = current_user.favourite_products.order(created_at: :desc)
+  end
+
   def show
   end
 

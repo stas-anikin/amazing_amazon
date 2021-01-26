@@ -37,8 +37,20 @@ class Ability
     can(:crud, Product) do |product|
       user == product.user
     end
-    can(:crud, Review) do |review|
-      user == review.user
+    can :like, Review do |review|
+      review.user != user
+    end
+
+    can :destroy, Like do |like|
+      like.user == user
+    end
+
+    can :favourite, Product do |product|
+      product.user != user
+    end
+
+    can :destroy, Favourite do |favourite|
+      favourite.user == user
     end
   end
 end
