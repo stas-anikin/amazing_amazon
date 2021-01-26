@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   resources :news_articles, only: [:new, :create, :show, :index, :edit, :update, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :users
+  resources :tags, onyl: [:index, :show]
 end

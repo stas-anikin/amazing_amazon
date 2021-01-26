@@ -16,7 +16,12 @@
                     <p class="card-text">
                         <%= number_to_currency(@product.price) %>
                     </p>
-
+<p class="card-text">
+Tags: 
+  <% @product.tags.each do |tag| %>
+      <%= link_to(tag.name, tag_path(tag.id)) %>, 
+  <% end %>
+       </p>
 <% if can? :crud, @product %>
             <%= link_to "Edit", edit_product_path(@product), class: "btn btn-outline-info" %>
     <% end %>

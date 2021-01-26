@@ -19,7 +19,6 @@ class ProductsController < ApplicationController
 
   def show
     @reviews = @product.reviews.order(created_at: :desc)
-
     @product = Product.find params[:id]
     @review = Review.new
     @like = @review.likes.find_by(user: current_user)
@@ -63,7 +62,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :description, :price)
+    params.require(:product).permit(:title, :description, :price, tag_ids: [])
   end
 
   def authorize_user!
