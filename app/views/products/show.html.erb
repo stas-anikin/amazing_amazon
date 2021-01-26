@@ -54,7 +54,6 @@ Tags:
 <h3>Reviews</h3>
 <% @reviews.each do |review| %>
     <div class='shadow-sm p-3 mb-1 bg-white rounded'>
-
 <%= review.body %>
 <div>
 Review by: 
@@ -62,19 +61,20 @@ Review by:
 </div>
     <h4><%= display_stars(review) %></h4>
     <div>
-    <small>
+        <small>
          <%= review.likes.count %> likes
-    </small>
-   <% if user_signed_in? && can?(:like, review) %>
-        <% like = current_user.likes.find_by_review_id(review) %>
-        <% if like %>    
-          <%= link_to "Unlike", like_path(like), method: :delete %>
-          <% else %>
-          <%= link_to "Like", review_likes_path(review), method: :post %>
-        <% end %>
-      <% end %>
-    <% if can? :crud, review %>
-<%= link_to "Delete", product_reviews_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %>
+        </small>
+            <% if user_signed_in? && can?(:like, review) %>
+            <% like = current_user.likes.find_by_review_id(review) %>
+            <% if like %>    
+            <%= link_to "Unlike", like_path(like), method: :delete %>
+            <% else %>
+            <%= link_to "Like", review_likes_path(review), method: :post %>
+            <% end %>
+            <% end %>
+            <% if can? :crud, review %>
+            <%= link_to "Delete", product_reviews_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
+            <% end %>
+    </div>
 </div>
 <% end %> 

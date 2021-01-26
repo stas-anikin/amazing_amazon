@@ -50,6 +50,9 @@ users = User.all
       )
     end
   end
+  p.reviews.each do |review|
+    review.likers = users.shuffle.slice(0, rand(users.count))
+  end
   p.tags = tags.shuffle.slice(0, rand(tags.count))
 end
 
@@ -67,4 +70,4 @@ end
 product = Product.all
 review = Review.all
 news_article = NewsArticle.all
-puts "Generated #{product.count} products, #{news_article.count} articles, #{users.count} users, #{review.count} reviews, #{tags.count} tags."
+puts "Generated #{product.count} products, #{news_article.count} articles, #{users.count} users, #{review.count} reviews, #{tags.count} tags"
