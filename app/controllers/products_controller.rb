@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
     @product = Product.find params[:id]
     @review = Review.new
     @like = @review.likes.find_by(user: current_user)
+    @vote = @review.votes.find_by(user: current_user)
     @favourite = @product.favourites.find_by(user: current_user)
   end
 

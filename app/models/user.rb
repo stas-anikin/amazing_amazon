@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :news_articles, dependent: :nullify
   has_many :likes, dependent: :destroy
   has_many :liked_reviews, through: :likes, source: :review
+  has_many :votes, dependent: :destroy
+  has_many :voted_reviews, through: :votes, source: :review
   has_many :favourites, dependent: :destroy
   has_many :favourite_products, through: :favourites, source: :product
   has_secure_password

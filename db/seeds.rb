@@ -9,6 +9,13 @@ Product.destroy_all()
 User.destroy_all()
 Review.destroy_all()
 PASSWORD = "123"
+test_user = User.create(
+  first_name: "Stas",
+  last_name: "Anikin",
+  email: "stas@stas.com",
+  password: PASSWORD,
+  is_admin: false,
+)
 super_user = User.create(
   first_name: "Jon",
   last_name: "Snow",
@@ -51,6 +58,7 @@ users = User.all
     end
   end
   p.reviews.each do |review|
+    review.voters = users.shuffle.slice(0, rand(users.count))
     review.likers = users.shuffle.slice(0, rand(users.count))
   end
   p.tags = tags.shuffle.slice(0, rand(tags.count))

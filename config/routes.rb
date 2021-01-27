@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :reviews, shallow: true, only: [:create, :destroy] do
       get :liked, on: :collection
       resources :likes, only: [:create, :destroy]
+      get :voted, on: :collection
+      resources :votes, only: [:create, :destroy]
     end
     # get :favoured, on: :collection
 

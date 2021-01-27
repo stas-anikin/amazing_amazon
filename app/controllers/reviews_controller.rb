@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  # before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def new
     @review = Review.new
@@ -21,11 +21,9 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find params[:product_id]
-    @review = Review.find params[:id]
+    @review = Review.find params[:format]
     @review.destroy
-
-    redirect_to product_path(@product), notice: "review deleted"
+    redirect_to product_path(@review.product), notice: "review deleted"
   end
 
   private
