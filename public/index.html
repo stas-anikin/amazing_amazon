@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Amazing Amazon SPA</title>
+
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar">
+				<a href="" data-target="welcome">Welcome</a> |
+				<a href="" data-target="product-index">Products</a> |
+				<a href="" data-target="product-new">New product</a>
+			</nav>
+		</header>
+		<main class="page active" id="welcome">
+			<h1>Welcome to Amazing Amazon</h1>
+		</main>
+		<main class="page" id="product-show"></main>
+		<main class="page" id="product-index">
+			<h1>Product</h1>
+			<ul class="product-list"></ul>
+		</main>
+		<main class="page" id="product-new">
+			<h1>New Product</h1>
+			<form id="new-product-form">
+				<div>
+					<label for="title">Title</label><br />
+					<input type="text" name="title" id="title" />
+				</div>
+				<div>
+					<label for="body">Body</label><br />
+					<textarea name="body" id="body"></textarea>
+				</div>
+				<div>
+					<label for="price">Price</label><br />
+					<textarea name="text" id="price"></textarea>
+				</div>
+				<input type="submit" value="Create product" />
+			</form>
+		</main>
+		<main class="page" id="product-edit">
+			<h1>Edit Product</h1>
+			<form id="edit-product-form">
+				<div>
+					<label for="title">Title</label><br />
+					<input type="text" name="title" id="title" />
+				</div>
+				<div>
+					<label for="body">Body</label><br />
+					<textarea name="body" id="body"></textarea>
+				</div>
+				<div>
+					<label for="price">Price</label><br />
+					<textarea name="text" id="price"></textarea>
+				</div>
+				<input type="hidden" value="" name="id" />
+				<input type="submit" value="Update product" />
+			</form>
+		</main>
+	</body>
+</html>

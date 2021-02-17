@@ -10,8 +10,7 @@
             <%= link_to user.full_name, user %>
           </div>
           <div class="card-body">
-  
-            <p class="card-text"><%= pluralize(user.products.count, "products") %></p>
+              <p class="card-text"><%= pluralize(user.products.count, "products") %></p>
             <%= link_to "View profile", user, class: "btn btn-outline-success" %>
             <% if user_signed_in? %>
               <% if user == current_user %>

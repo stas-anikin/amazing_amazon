@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.0"
+ruby "2.7.2"
 gem "faker", :git => "https://github.com/faker-ruby/faker.git", :branch => "master"
-
+gem "active_model_serializers", "~> 0.10.3"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.1.0"
 # Use postgresql as the database for Active Record
@@ -25,6 +25,8 @@ gem "bcrypt", "~> 3.1.7"
 # gem 'image_processing', '~> 1.2'
 #used for authorization
 gem "cancancan", "~> 1.15"
+gem "rack-cors"
+gem "rails_same_site_cookie"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false

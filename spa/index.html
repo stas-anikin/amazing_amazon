@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Amazon SPA</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <script defer src="./js/main.js" charset="utf-8"></script>
+</head>
+
+<body>
+   <header> 
+  <nav class='navbar'>
+    <a href="" data-id="product-index">Products</a>
+    <a href="" data-id="product-new">New Product</a>
+    
+  </nav>
+</header>
+  <h1>Amazon</h1>
+  <div id="product-show" class="page"></div>
+  <div id="product-index" class="page">
+      <h1>Products</h1>
+      <ul class='product-list'></ul>
+  </div>
+  <div id="product-new" class="page">
+    <form id='new-product-form' action="">
+      <div>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+      </div>
+      <div>
+        <label for="description">Description</label>
+        <textarea name="description" id="description"></textarea>
+      </div>
+      <div>
+        <label for="price">Price</label>
+        <input type="number" name="price" id="price">
+      </div>
+      <div>
+        <input type="submit" value="Create Product">
+      </div>
+    </form>
+  </div>
+<!--  -->
+<main class="page" id="product-edit">
+  <h1>Edit Product</h1>
+  <form id="edit-product-form">
+    <div>
+      <label for="title">Title</label><br />
+      <input type="text" name="title" id="title"  />
+    </div>
+    <div>
+      <label for="description">Description</label><br />
+      <textarea name="description" id="description"></textarea>
+    </div>
+    <div>
+      <label for="price">Price</label><br />
+      <input type="number" name="price" id="price"/>
+    </div>
+    <input type="hidden" value="" name="id" />
+    <input type="submit" value="Update Product" />
+  </form>
+</main>
+<!--  -->
+</body>
+
+</html>

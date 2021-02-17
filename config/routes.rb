@@ -19,5 +19,11 @@ Rails.application.routes.draw do
   resources :news_articles, only: [:new, :create, :show, :index, :edit, :update, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :users
-  resources :tags, onyl: [:index, :show]
+  resources :tags, only: [:index, :show]
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :products, only: [:index, :show, :update, :create, :destroy]
+      resource :session, only: [:create, :destroy]
+    end
+  end
 end

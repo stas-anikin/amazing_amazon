@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   # scope(:created_after, ->(date) { where("created_at < ?", "#{date}") })
+  before_create :generate_api_key
+
   before_save { self.email = email.downcase }
   has_many :products, dependent: :nullify
   has_many :reviews, dependent: :nullify
@@ -20,5 +22,14 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}".titleize
+  end
+
+  private
+
+  def generate_api_key
+    loop do
+      self.api_key = SecureRandom.hex(32)
+      break unless User.exists?(api_key: api_key)
+    end
   end
 end
